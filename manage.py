@@ -24,43 +24,12 @@ class BuildDatabase(Command):
         pass
 
 
-class CreateDatabase(Command):
-    """
-    Creates the database based on models.py
-    """
-    @staticmethod
-    def run(app=app):
-        """
-        Creates the database in the application context
-        :return: no return
-        """
-        with app.app_context():
-            db.create_all()
-            db.session.commit()
-
-
-class DestroyDatabase(Command):
-    """
-    Creates the database based on models.py
-    """
-    @staticmethod
-    def run(app=app):
-        """
-        Creates the database in the application context
-        :return: no return
-        """
-        with app.app_context():
-            db.drop_all()
-            # db.session.remove()
-
 # Set up the alembic migration
 migrate = Migrate(app, db, compare_type=True)
 
 # Setup the command line arguments using Flask-Script
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
-manager.add_command('createdb', CreateDatabase())
-manager.add_command('destroydb', DestroyDatabase())
 
 if __name__ == '__main__':
     manager.run()

@@ -17,16 +17,16 @@ class Article(db.Model):
     Signifies a single paper, that then links to the citations it makes
     to other known papers
     """
-    __bind_key__ = 'article'
     __tablename__ = 'article'
+
     id = db.Column(db.Integer, primary_key=True)
     bibcode = db.Column(db.String)
-    cites = db.relationship('Citations', backref='article')
-    referenced_by = db.relationship('Citations', backref='article')
+    cites = db.Column(db.Integer)
+    referenced_by = db.Column(db.Integer)
 
     def __repr__(self):
         return '<Article id:{0}, bibcode:{1}, citations:{2}>'\
-            .format(self.id, self.bibcode, self.citations)
+            .format(self.id, self.bibcode, getattr(self, 'citations', 'No citations'))
 
 
 class Citations(db.Model):
@@ -35,14 +35,15 @@ class Citations(db.Model):
     Collection of the citations and sentiments of those citations
     from an article.
     """
-    __bind_key__ = 'citations'
     __tablename__ = 'citations'
     id = db.Column(db.Integer, primary_key=True)
-    citing_article = db.Column(db.Integer, db.ForeignKey('article.id'))
-    references_article = db.Column(db.Integer, db.ForeignKey('article.id'))
+    citing_article_id = db.Column(db.Integer, db.ForeignKey('article.id'))
+    references_article_id = db.Column(db.Integer, db.ForeignKey('article.id'))
+    citing_article = db.relationship('Article', foreign_keys=[citing_article_id])
+    references_article = db.relationship('Article', foreign_keys=[references_article_id])
     sentiment = db.Column(db.Float)
 
     def __repr__(self):
-        return '<Citations, id: {0} cites_article: {1}, ' \
+        return '<Citations, id: {0} citing_article: {1}, ' \
                'references_article {2}, sentiment: {3}' \
             .format(self.id, self.citing_article, self.references_article, self.sentiment)
