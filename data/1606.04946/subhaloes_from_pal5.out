@@ -1,0 +1,35 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Setting up subhalo-stream encounters}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Expected number of flybys}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Velocity Distribution of Flybys}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Impact parameter distribution}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.4}{Number density of subhaloes}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.5}{Velocity distribution of subhaloes}{section.2}% 7
+\BOOKMARK [2][-]{subsection.2.6}{Evolution of the number density of subhaloes}{section.2}% 8
+\BOOKMARK [1][-]{section.3}{Stream Gap Fabrication}{}% 9
+\BOOKMARK [2][-]{subsection.3.1}{Review of gap evolution}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.2}{Effective N-body Simulation}{section.3}% 11
+\BOOKMARK [1][-]{section.4}{Expected Properties of stream gaps}{}% 12
+\BOOKMARK [2][-]{subsection.4.1}{Gap density threshold and minimum gap size}{section.4}% 13
+\BOOKMARK [2][-]{subsection.4.2}{Gap size distribution for single subhalo population}{section.4}% 14
+\BOOKMARK [2][-]{subsection.4.3}{Gap depth for single subhalo population}{section.4}% 15
+\BOOKMARK [2][-]{subsection.4.4}{Gap size distribution from CDM background}{section.4}% 16
+\BOOKMARK [1][-]{section.5}{Number of gaps expected in observed MW streams}{}% 17
+\BOOKMARK [2][-]{subsection.5.1}{Estimating the age of a stream}{section.5}% 18
+\BOOKMARK [2][-]{subsection.5.2}{Pal 5}{section.5}% 19
+\BOOKMARK [2][-]{subsection.5.3}{GD-1}{section.5}% 20
+\BOOKMARK [2][-]{subsection.5.4}{Tri/Psc}{section.5}% 21
+\BOOKMARK [2][-]{subsection.5.5}{ATLAS}{section.5}% 22
+\BOOKMARK [2][-]{subsection.5.6}{Phoenix}{section.5}% 23
+\BOOKMARK [2][-]{subsection.5.7}{Styx}{section.5}% 24
+\BOOKMARK [1][-]{section.6}{Numerical Testing}{}% 25
+\BOOKMARK [2][-]{subsection.6.1}{Flyby properties}{section.6}% 26
+\BOOKMARK [2][-]{subsection.6.2}{Distribution of gap depths and sizes}{section.6}% 27
+\BOOKMARK [1][-]{section.7}{Discussion}{}% 28
+\BOOKMARK [2][-]{subsection.7.1}{Searching for gaps}{section.7}% 29
+\BOOKMARK [2][-]{subsection.7.2}{Extension to dwarf galaxy streams}{section.7}% 30
+\BOOKMARK [2][-]{subsection.7.3}{Comparison with other works}{section.7}% 31
+\BOOKMARK [2][-]{subsection.7.4}{Baryonic effects}{section.7}% 32
+\BOOKMARK [2][-]{subsection.7.5}{Limitations of the method}{section.7}% 33
+\BOOKMARK [1][-]{section.8}{Conclusion}{}% 34
+\BOOKMARK [1][-]{appendix.A}{Number of subhaloes entering cylinder}{}% 35

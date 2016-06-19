@@ -6,8 +6,11 @@ import app
 
 from flask import current_app
 from flask.ext.testing import TestCase
+
+from carebear import get_sentences_latex, get_bbl_map
 from models import db, Article, Citations
 
+import unittest
 import testing.postgresql
 
 
@@ -100,20 +103,171 @@ class TestCaseDatabase(TestCase):
         )
 
 
-class TestRegex(TestCase):
+class TestRegex(unittest.TestCase):
     """
     Test regex on some things we expect to be able to find from the fulltext.
     """
-    def setUp(self):
-        self.text = "This sentence contains some citations to " \
-                    "(Guy et al. 2010) and another (Single 1999) " \
-                    "and also some in text Jdizzle et al. (2015) " \
-                    "instead of David (2013)."
+    def test_get_citep(self):
+        """
+        Get all citations with citep
+        """
+        text = (
+            'This is useless text, some normal science. '
+            'This is some relevant citation \citep{Author96} and another one'
+            'here \citep{SecondAuthor98}. But '
+            'this also has no citation.'
+        )
+        sentences = get_sentences_latex(text)
 
-    def test_in_bracket_et_al(self):
+        extracted = list(sentences.keys())
+        expected = ['Author96', 'SecondAuthor98']
+        self.assertListEqual(
+            extracted,
+            expected
+        )
+
+    def test_get_citet(self):
         """
-        Test when it is in brackets with et al, form: (Author et al. YYYY)
+        Get all citations with citep
         """
+        text = (
+            'This is useless text, some normal science. '
+            'This is some relevant citation \citet{Author96} and another one'
+            'here \citet{SecondAuthor98}. But '
+            'this also has no citation.'
+        )
+        sentences = get_sentences_latex(text)
+
+        extracted = list(sentences.keys())
+        expected = ['Author96', 'SecondAuthor98']
+        self.assertListEqual(
+            extracted,
+            expected
+        )
+
+    def test_get_citealt(self):
+        """
+        Get all citations with citep
+        """
+        text = (
+            'This is useless text, some normal science. '
+            'This is some relevant citation \citealt{Author96} and another one'
+            'here \citealt{SecondAuthor98}. But '
+            'this also has no citation.'
+        )
+        sentences = get_sentences_latex(text)
+
+        extracted = list(sentences.keys())
+        expected = ['Author96', 'SecondAuthor98']
+        self.assertListEqual(
+            extracted,
+            expected
+        )
+
+    def test_load_bbl(self):
+        """
+        Test we can load BBL file and create a hashmap for entries
+        """
+        text = (
+            '\\bibitem[{{Ahn} {et~al}\mbox{.}(2012){Ahn}, {Alexandroff}, {Allende Prieto},'
+            '{Anderson}, {Anderton}, {Andrews}, {Aubourg}, {Bailey}, {Balbinot}, {Barnes},'
+            '\& et~al.}]{sdssdr9}'
+            '{Ahn} C.~P. {et~al.}, 2012, ApJS, 203, 21'
+            ''
+            '\\bibitem[{{Amorisco}(2014)}]{amorisco_2014}'
+            '{Amorisco} N.~C., 2014, ArXiv e-prints'
+        )
+
+        bbl_map = get_bbl_map(text)
+        expected_map = ['sdssdr9', 'amorisco_2014']
+        self.assertListEqual(
+            list(bbl_map.keys()),
+            expected_map
+
+        )
+
+    # def test_in_bracket_et_al(self):
+    #     """
+    #     Test when it is in brackets with et al, form: (Author et al. YYYY)
+    #     """
+    #     text = (
+    #         'This is useless text, some normal science. '
+    #         'This is some relevant citation (Jdizzle et al. 2015). But '
+    #         'this also has no citation.'
+    #     )
+    #     sentences = get_sentences(text)
+    #
+    #     self.assertEqual(
+    #         len(sentences.keys()),
+    #         1
+    #     )
+    #     self.assertIn('Jdizzle', sentences.keys()[0])
+    #
+    # def test_in_bracket_single(self):
+    #     """
+    #     Test when it is in brackets one author, form: (Author YYYY)
+    #     """
+    #     text = (
+    #         'This is useless text, some normal science. '
+    #         'This is some relevant citation (Jdizzle 2015). But '
+    #         'this also has no citation.'
+    #     )
+    #     sentences = get_sentences(text)
+    #
+    #     self.assertEqual(
+    #         len(sentences.keys()),
+    #         1
+    #     )
+    #     self.assertIn('Jdizzle', sentences.keys()[0])
+    #
+    # def test_in_sentence_date_brackets(self):
+    #     """
+    #     Test when the year is in brackets, \citet{}: Author et al. (YYYY)
+    #     """
+    #     text = (
+    #         'This is useless text, some normal science. '
+    #         'This is some relevant citation Jdizzle et al. (2015). But '
+    #         'this also has no citation.'
+    #     )
+    #     sentences = get_sentences(text)
+    #
+    #     self.assertEqual(
+    #         len(sentences.keys()),
+    #         1
+    #     )
+    #     self.assertIn('Jdizzle', sentences.keys()[0])
+    #
+    # def test_in_sentence_date_brackets_single(self):
+    #     """
+    #     Test when the year is in brackets one author, \citet{}: Author (YYYY)
+    #     """
+    #     text = (
+    #         'This is useless text, some normal science. '
+    #         'This is some relevant citation Jdizzle (2015). But '
+    #         'this also has no citation.'
+    #     )
+    #     sentences = get_sentences(text)
+    #
+    #     self.assertEqual(
+    #         len(sentences.keys()),
+    #         1
+    #     )
+    #     self.assertIn('Jdizzle', sentences.keys()[0])
+    #
+    # def test_multiple_citations_in_one_sentence(self):
+    #     """
+    #     Test when there are multiple citations in one entry
+    #     """
+    #     text = (
+    #         'This is a citation (Jdizzle et al. 2015) and also this '
+    #         'is a citation (Jdazzle et al. 2015).'
+    #     )
+    #     sentences = get_sentences(text)
+    #     self.assertEqual(
+    #         len(sentences.keys()),
+    #         2
+    #     )
+    #
 
     # Some notes
     #
